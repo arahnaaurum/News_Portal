@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+NEWS
+{% endblock title %}
+
+{% block content %}
+<h1>BREAKING NEWS</h1>
+<h2>We have {{newslist|length}} titles to read:</h2>
+<hr>
+    {% if newslist %}
+    {% for news in newslist %}
+        <p> {{ news.title|censor:"eng" }} </p>
+        <p> {{ news.time_creation|date:"d M Y" }} </p>
+        <p> {{ news.text|truncatewords:20|censor:"eng"}} </p>
+    {% endfor %}
+    {% else %}
+    <h2>No news!</h2>
+    {% endif %}
+
+{% endblock content %}
