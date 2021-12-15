@@ -11,4 +11,6 @@ NEWS
     <p> Published: {{ news.time_creation|date:"d M Y"}}{{news.time_creation|time:"H:i"}} </p>
     <p> {{ news.text|censor:"eng"}} </p>
 
+<a href="{% url 'news_edit' news.pk %}">EDIT</a>
+<a href="{% url 'news_delete' news.pk %}">DELETE</a>
 {% endblock content %}
