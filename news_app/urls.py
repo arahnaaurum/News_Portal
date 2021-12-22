@@ -8,5 +8,5 @@ urlpatterns = [
     path('search/', search),
     path('create/', NewsCreateView.as_view(), name = "news_add"),
     path('<int:pk>/edit/', NewsUpdateView.as_view(), name = "news_edit"),
-    path('<int:pk>/delete/', NewsDeleteView.as_view(), name = "news_delete")
+    path('<int:pk>/delete/', NewsDeleteView.as_view(), name = "news_delete"),
 ]

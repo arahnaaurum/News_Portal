@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import *
 from .filters import PostFilter, SearchFilter
 from .forms import PostForm  # импорт форм
@@ -34,12 +35,13 @@ class NewsDetail(DetailView):
     context_object_name = 'news'
 
 
-class NewsCreateView(CreateView):
+class NewsCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'flatpages/news_add.html'
     form_class = PostForm
+    permission_required = ('news_app.add_post',)
 
 
-class NewsUpdateView(UpdateView):
+class NewsUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'flatpages/news_edit.html'
     form_class = PostForm
 
@@ -47,12 +49,17 @@ class NewsUpdateView(UpdateView):
         pk = self.kwargs.get('pk')
         return Post.objects.get(pk=pk)
 
-class NewsDeleteView(DeleteView):
+    permission_required = ('news_app.change_post',)
+
+
+class NewsDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'flatpages/news_delete.html'
     queryset = Post.objects.all()
     success_url = '/news/'
+    permission_required = ('news_app.delete_post',)
 
-#Это view для отедельной страницы с фильтрами
+
+#Это view для отдельной страницы с фильтрами (пока не буду ее удалять, вдруг пригодится)
 def search(request):
     result = SearchFilter(request.GET, queryset = Post.objects.all())
     return render (request, 'flatpages/search.html', {'filter':result})

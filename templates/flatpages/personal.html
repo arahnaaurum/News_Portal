@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+Search Page
+{% endblock title %}
+
+{% block content %}
+<h1>Welcome to your personal page, {{request.user.username}}!</h1>
+
+<div> <p> You wonder, how do we know your name? </p>
+    <p> ... </p>
+    <p> The Internet knows (almost) everything O_O </p> </div>
+<hr>
+<button> <a href="../accounts/logout/">Log out</a> </button>
+
+<div>
+    <p> Would you like to contribute? </p> </div>
+<hr>
+
+{% if not_author %}
+<button> <a href="authors/"> Become an Author </a> </button>
+{% endif %}
+
+{% if not not_author %}
+<button> <a href="../news/create/"> Start now! </a> </button>
+{% endif %}
+
+{% endblock content %}
