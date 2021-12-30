@@ -1,9 +1,12 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+from django.shortcuts import render, redirect, reverse
+from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import *
 from .filters import PostFilter, SearchFilter
-from .forms import PostForm  # импорт форм
+from .forms import PostForm, SubscribeForm
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 class NewsList(ListView):
     model = Post
@@ -57,6 +60,42 @@ class NewsDeleteView(PermissionRequiredMixin, DeleteView):
     queryset = Post.objects.all()
     success_url = '/news/'
     permission_required = ('news_app.delete_post',)
+
+
+class SubUserView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'flatpages/subscribe.html', {})
+
+    def post(self, request, *args, **kwargs):
+        category = Category.objects.get(name = request.POST["category_name"])
+        email = ''
+        if request.user.email: #если у юзера уже есть почта, будет использована она
+           email = request.user.email
+        else:
+           email = request.POST["email"] #если нет, будет использована введенная
+
+# проверка на наличие подписки
+        not_subscribed = True
+
+        for obj in SubUser.objects.all():
+            if (obj.sub_user == request.user and obj.category == category and obj.user_email == email):
+                not_subscribed = False
+
+        if not_subscribed:
+            subscription = SubUser(
+                            sub_user = request.user,
+                            category = category,
+                            user_email = email,
+                            )
+            subscription.save()
+
+        return redirect('/news/')
+
+
+class SubView(CreateView):
+    template_name = 'flatpages/sub.html'
+    form_class = SubscribeForm
+    success_url = '/news/'
 
 
 #Это view для отдельной страницы с фильтрами (пока не буду ее удалять, вдруг пригодится)

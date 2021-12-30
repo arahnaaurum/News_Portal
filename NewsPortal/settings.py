@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'fpages',
-    'news_app',
+    'news_app.apps.NewsAppConfig',
     'django_filters',
     'pers_acc',
     # allauth
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
+    # apscheduler
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
@@ -162,8 +164,19 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #'none'
 ACCOUNT_FORMS = {'signup': 'news_app.forms.BasicSignupForm'}
-
+# ACCOUNT_SIGNUP_FORM_CLASS = {'signup': 'news_app.forms.LocalSignupForm'}
 
 SITE_ID = 1
+DEFAULT_FROM_EMAIL = 'arahna.aurum@yandex.ru'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'arahna.aurum'
+EMAIL_HOST_PASSWORD = 'ndqbuldrlpkctwej'
+EMAIL_USE_SSL = True
+
+# настройки для apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

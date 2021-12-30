@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+Search Page
+{% endblock title %}
+
+{% block content %}
+<h1>Hi, {{request.user.username}}. Would you like to subscribe?</h1>
+<!--<form method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form.as_p}}-->
+<!--    <input type="submit" value="ADD">-->
+<!--</form>-->
+
+<form action="{% url 'subscribe' %}" method="POST">
+    {% csrf_token %}
+    <label for="category_name"> <h4>Category:</h4></label><br>
+    <input id="category_name" name="category_name" type="radio" value ='sport'> Sport <br>
+    <input id="category_name" name="category_name" type="radio" value='politics'> Politics<br>
+    <input id="category_name" name="category_name" type="radio" value='beauty'> Beauty <br>
+    <input id="category_name" name="category_name" type="radio" value='entertainment'> Entertainment <br>
+
+    <label for="email"><h4>Email:</h4></label>
+    <input id="email" name="email" type="email"><br>
+
+    <input type="submit">
+</form>
+
+{% endblock content %}
