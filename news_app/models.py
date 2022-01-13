@@ -83,9 +83,11 @@ class Post(models.Model):
         return reverse('newsdetail', kwargs={'pk': self.pk}) # newsdetail - это атрибут "name" из .urls, в kwargs указываем "ключ" новой страницы
 
     def clean(self):
+        cleaned_data = super().clean()
         maxpostnumber = 3
         if self.author.max_post > maxpostnumber:
             raise ValueError("You may not post more than 3 times per day")
+        return cleaned_data
 
     def __str__(self):
         return f'{self.title}'

@@ -4,9 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from .models import *
 from .filters import PostFilter, SearchFilter
 from .forms import PostForm, SubscribeForm
+from .tasks import send_new_post
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
 
 class NewsList(ListView):
     model = Post
@@ -42,6 +41,14 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'flatpages/news_add.html'
     form_class = PostForm
     permission_required = ('news_app.add_post',)
+
+    # def post(self, request, *args, **kwargs):
+    #     newpost = {'title': request.POST['title'],
+    #                     'text': request.POST['text'],
+    #                     'post_category':request.POST['post_category'],
+    #                     }
+    #     send_new_post(newpost)
+    #     return super().post(request, *args, **kwargs)
 
 
 class NewsUpdateView(PermissionRequiredMixin, UpdateView):
