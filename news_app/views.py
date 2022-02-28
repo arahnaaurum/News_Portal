@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.cache import cache
+
 from .models import *
 from .filters import PostFilter, SearchFilter
 from .forms import PostForm, SubscribeForm
 from .tasks import send_new_post
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class NewsList(ListView):
@@ -35,6 +40,15 @@ class NewsDetail(DetailView):
     model = Post
     template_name = 'flatpages/newsdetail.html'
     context_object_name = 'news'
+
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта
+        obj = cache.get(f'post-{self.kwargs["pk"]}',
+                        None)
+        if not obj:
+            obj = super().get_object(*args, **kwargs)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 class NewsCreateView(PermissionRequiredMixin, CreateView):

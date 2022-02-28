@@ -7,14 +7,21 @@ NEWS
 {% endblock title %}
 
 {% block content %}
-<h1>BREAKING NEWS</h1>
+    {% load cache%}
+    {% cache 30 greeting %}
+        {% block greeting %}
+        <h1>BREAKING NEWS</h1>
+        {% endblock greeting %}
+    {% endcache %}
+
 <h2>We have {{newslist|length}} titles to read</h2>
 <hr>
 <h4>To search through our stories, you may use either <a href="/news/search/" target="_blank">the separate form</a> or the filters below:</h4>
-<form method="GET">
-    {{ filter.form }}
-    <input type="submit" value="Найти">
-</form>
+        <form method="GET">
+            {{ filter.form }}
+            <input type="submit" value="Найти">
+        </form>
+
 <hr>
     {% if newslist %}
             {% for news in newslist %}
@@ -31,7 +38,7 @@ NEWS
 <a href="{% url 'news_add' %}"><span style="color: pink; background-color: teal; padding: 5px;">ADD YOUR STORY!</span></a> <br>
 
 <!--Пагинация-->
-    {% if is_paginated %}
+{% if is_paginated %}
     {% if page_obj.has_previous %}
         <a href="?{{ request.get_full_path|update_page:1}}">First</a>
         <a href="?{{ request.get_full_path|update_page:page_obj.previous_page_number}}">  <--  </a>

@@ -4,12 +4,14 @@ Search Page
 {% endblock title %}
 
 {% block content %}
+{% load cache%}
 <h1>Welcome to your personal page, {{request.user.username}}!</h1>
 
 <div> <p> You wonder, how do we know your name? </p>
     <p> ... </p>
     <p> The Internet knows (almost) everything O_O </p> </div>
 <hr>
+
 <button> <a href="../accounts/logout/">Log out</a> </button>
 
 <div>

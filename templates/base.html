@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block head_title %}{% endblock head_title %}</title>
+        <title>
+            {% load cache%}
+            {% cache 30 head_title %}
+                {% block head_title %}
+                {% endblock head_title %}
+            {% endcache %}
+        </title>
     </head>
     <body>
         {% block body %}

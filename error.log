@@ -1,0 +1,52 @@
+ERROR 2022-02-28 18:12:31,362 Internal Server Error: /news/ C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\utils\log.py (<class 'NameError'>, NameError("name 'word' is not defined"), <traceback object at 0x00000205C63F70C0>)
+Traceback (most recent call last):
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    response = response.render()
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\response.py", line 105, in render
+    self.content = self.rendered_content
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\response.py", line 83, in rendered_content
+    return template.render(context, self._request)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\defaulttags.py", line 312, in render
+    return nodelist.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\defaulttags.py", line 211, in render
+    nodelist.append(node.render_annotated(context))
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 988, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\template\base.py", line 698, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\NewsPortal\news_app\templatetags\custom_filters.py", line 18, in censor
+    result.append(word)
+NameError: name 'word' is not defined
+ERROR 2022-02-28 18:12:31,418 "GET /news/ HTTP/1.1" 500 192627 C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\venv\lib\site-packages\django\core\servers\basehttp.py None
