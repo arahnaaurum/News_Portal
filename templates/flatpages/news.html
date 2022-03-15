@@ -1,5 +1,8 @@
 {% extends 'flatpages/default.html' %}
 
+{% load i18n %}
+{% load tz %}
+
 {% load custom_filters %}
 
 {% block title %}
@@ -10,16 +13,36 @@ NEWS
     {% load cache%}
     {% cache 30 greeting %}
         {% block greeting %}
-        <h1>BREAKING NEWS</h1>
+         <h1>{% trans 'BREAKING NEWS' %}</h1>
         {% endblock greeting %}
     {% endcache %}
 
-<h2>We have {{newslist|length}} titles to read</h2>
+<main>
+      <style>
+            main {background-color: {% if current_time.hour >= 19 or current_time.hour <= 7 %} darkcyan {% else %} powderblue {% endif %};}
+      </style>
+
+<h2>{% trans 'We have'  %} {{newslist|length}} {% trans 'titles to read' %}</h2>
 <hr>
-<h4>To search through our stories, you may use either <a href="/news/search/" target="_blank">the separate form</a> or the filters below:</h4>
+   {% get_current_timezone as TIME_ZONE %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="timezone">Time zone:</label>
+            <select name="timezone">
+                {% for tz in timezones %}
+                <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Set">
+        </form>
+
+    {{ TIME_ZONE }}
+    {{ current_time|timezone:TIME_ZONE }}
+<hr>
+<h4>{% trans 'To search through our stories, you may use either'  %} <a href="/news/search/" target="_blank">{% trans 'the separate form' %}</a> {% trans 'or the filters below:' %}</h4>
         <form method="GET">
             {{ filter.form }}
-            <input type="submit" value="Найти">
+            <input type="submit" value="Search">
         </form>
 
 <hr>
@@ -28,15 +51,15 @@ NEWS
                 <p> {{ news.title|censor:"eng" }} </p>
                 <p> {{ news.time_creation|date:"d M Y" }} </p>
                 <p> {{ news.text|truncatewords:20|censor:"eng"}} </p>
-                <a href="{{ news.get_absolute_url }}">Read the whole story</a>
+                <a href="{{ news.get_absolute_url }}">{% trans 'Read the whole story' %}</a>
                 <hr>
             {% endfor %}
     {% else %}
     <h2>No news!</h2>
     {% endif %}
 
-<a href="{% url 'news_add' %}"><span style="color: pink; background-color: teal; padding: 5px;">ADD YOUR STORY!</span></a> <br>
-
+<a href="{% url 'news_add' %}"><span style="color: pink; background-color: teal; padding: 5px;">{% trans 'ADD YOUR STORY!' %}</span></a> <br>
+</main>
 <!--Пагинация-->
 {% if is_paginated %}
     {% if page_obj.has_previous %}

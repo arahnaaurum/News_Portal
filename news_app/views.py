@@ -3,14 +3,34 @@ from django.views.generic import View, ListView, DetailView, CreateView, UpdateV
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.cache import cache
 
+from django.utils.translation import gettext as _
+from django.utils import timezone
+import pytz
+
+from rest_framework import viewsets
+from rest_framework import permissions
+
+from .serializers import *
 from .models import *
 from .filters import PostFilter, SearchFilter
 from .forms import PostForm, SubscribeForm
 from .tasks import send_new_post
 
+import django_filters
 import logging
 logger = logging.getLogger(__name__)
 
+class NewsViewset(viewsets.ModelViewSet):
+   queryset = Post.objects.all().filter(type='NE')
+   serializer_class = PostSerializer
+   filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+   filterset_fields = ["id"]
+
+class ArticleViewset(viewsets.ModelViewSet):
+   queryset = Post.objects.all().filter(type='AR')
+   serializer_class = PostSerializer
+   filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+   filterset_fields = ["id"]
 
 class NewsList(ListView):
     model = Post
@@ -28,7 +48,13 @@ class NewsList(ListView):
     def get_context_data(self, *args, **kwargs):
         return {**super().get_context_data(*args, **kwargs),
                 'filter': self.get_filter(),
+                'current_time': timezone.now(),
+                'timezones': pytz.common_timezones
                 }
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/news')
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)

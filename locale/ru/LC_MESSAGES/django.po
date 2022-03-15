@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-13 15:33+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\fpages\admin.py:11
+msgid "Advanced options"
+msgstr "Специальные возможности"
+
+#: .\templates\flatpages\default.html:38
+msgid "Your Account"
+msgstr "Ваш профиль"
+
+#: .\templates\flatpages\news.html:15
+msgid "BREAKING NEWS"
+msgstr "Новости"
+
+#: .\templates\flatpages\news.html:19
+msgid "We have"
+msgstr "у нас есть"
+
+#: .\templates\flatpages\news.html:19
+msgid "titles to read"
+msgstr "шт. историй, чтобы почитать!"
+
+#: .\templates\flatpages\news.html:21
+msgid "To search through our stories, you may use either"
+msgstr "Чтобы найти нужную историю, используйте"
+
+#: .\templates\flatpages\news.html:21
+msgid "the separate form"
+msgstr "отдельную форму"
+
+#: .\templates\flatpages\news.html:21
+msgid "or the filters below:"
+msgstr "или фильтры ниже:"
+
+#: .\templates\flatpages\news.html:33
+msgid "Read the whole story"
+msgstr "Читать историю полностью"
+
+#: .\templates\flatpages\news.html:40
+msgid "ADD YOUR STORY!"
+msgstr "Добавить заметку!"
+
+#: .\templates\flatpages\newsdetail.html:6
+msgid "NEWS"
+msgstr "НОВОСТЬ"
+
+#: .\templates\flatpages\newsdetail.html:14
+msgid "EDIT"
+msgstr "Изменить"
+
+#: .\templates\flatpages\newsdetail.html:15
+msgid "DELETE"
+msgstr "Удалить"
+
+#: .\templates\flatpages\newsdetail.html:16
+msgid "Subscribe 4 more!"
+msgstr "Подпишитесь на рассылку!"
+
+#: .\templates\flatpages\personal.html:9
+msgid "Welcome to your personal page"
+msgstr "Добро пожаловать на Вашу личную страницу"
+
+#: .\templates\flatpages\personal.html:11
+msgid "You wonder, how do we know your name?"
+msgstr "Вам интересно, откуда мы знаем Ваше имя?"
+
+#: .\templates\flatpages\personal.html:13
+msgid "The Internet knows (almost) everything"
+msgstr "Интернет знает (почти) всё"
+
+#: .\templates\flatpages\personal.html:16
+msgid "Log out"
+msgstr "Выйти"
+
+#: .\templates\flatpages\personal.html:19
+msgid "Would you like to contribute?"
+msgstr "Хотите опубликовать свою историю?"
+
+#: .\templates\flatpages\personal.html:23
+msgid "Become an Author"
+msgstr "Стать автором"
+
+#: .\templates\flatpages\personal.html:27
+msgid "Start now!"
+msgstr "Начнем!"
+
+#: .\templates\flatpages\search.html:4
+msgid "Search Page"
+msgstr "Поисковая страница"
+
+#: .\templates\flatpages\search.html:8
+msgid "What are you looking for?"
+msgstr "Что Вы ищете?"
+
+#: .\templates\flatpages\subscribe.html:8
+msgid "Would you like to subscribe to the latest news"
+msgstr "Не желаете ли Вы подписаться на новостную рассылку"
+
+#: .\templates\flatpages\subscribe.html:17
+msgid "Category"
+msgstr "Категория"

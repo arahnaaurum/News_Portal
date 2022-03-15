@@ -1,5 +1,5 @@
-from django.urls import path
-from .views import NewsList, NewsDetail, search, NewsCreateView, NewsUpdateView, NewsDeleteView, SubUserView, SubView
+from django.urls import path, include
+from .views import *
 from django.conf.urls import url
 from django.views.decorators.cache import cache_page
 
