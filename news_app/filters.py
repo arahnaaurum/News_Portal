@@ -3,7 +3,7 @@ from django.forms import DateInput
 from .models import Post
 
 class PostFilter(FilterSet):
-# добавлю виджет для ввода даты
+# виджет для ввода даты
     time_creation = DateFilter(
         lookup_expr='gt',
         widget = DateInput(
@@ -20,7 +20,7 @@ class PostFilter(FilterSet):
         }
 
 class SearchFilter(FilterSet):
-# это фильтр, который будет отображаться на отдельной странице
+# фильтр новостей,отображающийся на отдельной странице
     author__identity__username = CharFilter(lookup_expr='icontains')
     title = CharFilter(lookup_expr='icontains')
     time_creation = DateFilter(

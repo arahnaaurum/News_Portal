@@ -60,13 +60,12 @@ NEWS
 
 <a href="{% url 'news_add' %}"><span style="color: pink; background-color: teal; padding: 5px;">{% trans 'ADD YOUR STORY!' %}</span></a> <br>
 </main>
+
 <!--Пагинация-->
 {% if is_paginated %}
     {% if page_obj.has_previous %}
         <a href="?{{ request.get_full_path|update_page:1}}">First</a>
         <a href="?{{ request.get_full_path|update_page:page_obj.previous_page_number}}">  <--  </a>
-<!--        <a href="?page=1">First</a>-->
-<!--        <a href="?page={{ page_obj.previous_page_number }}"><<<</a>-->
     {% endif %}
 
     {% for num in page_obj.paginator.page_range %}
@@ -81,6 +80,6 @@ NEWS
         <a href="?page={{ page_obj.next_page_number }}">>>></a>
         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
     {% endif %}
-
 {% endif %}
+
 {% endblock content %}

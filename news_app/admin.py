@@ -4,7 +4,7 @@ from modeltranslation.admin import TranslationAdmin # импортируем м�
 
 def nullify_posts(modeladmin, request, queryset):
     queryset.update(max_post=0)
-nullify_posts.short_description = 'Nullify daily posts counter'
+    nullify_posts.short_description = 'Nullify daily posts counter'
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ['identity', 'rating_aut', 'max_post']
