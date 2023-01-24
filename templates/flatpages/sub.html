@@ -1,0 +1,16 @@
+<!--Это страница подписки через Джанго - форму; я не использовала ее в итоговом проекте,
+т.к. реализовала подписку через обычный View / переопределение метода post -->
+{% extends 'flatpages/default.html' %}
+{% block title %}
+Search Page
+{% endblock title %}
+
+{% block content %}
+<h1>Hi, {{request.user.username}}. Would you like to subscribe?</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Subscribe">
+</form>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+{% load i18n %}
+{% block title %}
+Search Page
+{% endblock title %}
+
+{% block content %}
+{% load cache%}
+<h1>{% trans 'Welcome to your personal page' %}, {{request.user.username}}!</h1>
+
+<div> <p>{% trans 'You wonder, how do we know your name?' %} </p>
+    <p> ... </p>
+    <p> {% trans 'The Internet knows (almost) everything' %} O_O </p> </div>
+<hr>
+
+<button> <a href="../accounts/logout/">{% trans 'Log out' %}</a> </button>
+
+<div>
+    <p> {% trans 'Would you like to contribute?' %} </p> </div>
+<hr>
+
+{% if not_author %}
+<button> <a href="authors/"> {% trans 'Become an Author' %} </a> </button>
+{% endif %}
+
+{% if not not_author %}
+<button> <a href="../news/create/"> {% trans 'Start now!' %} </a> </button>
+{% endif %}
+
+{% endblock content %}

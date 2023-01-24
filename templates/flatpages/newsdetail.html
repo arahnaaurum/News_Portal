@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+{% load i18n %}
+{% load custom_filters %}
+
+{% block title %}
+{% trans 'NEWS' %}
+{% endblock title %}
+
+{% block content %}
+   <h2> {{ news.title|censor:"eng"}} </h2>
+    <p> Published: {{ news.time_creation|date:"d M Y"}}{{news.time_creation|time:"H:i"}} </p>
+    <p> {{ news.text|censor:"eng"}} </p>
+
+<a href="{% url 'news_edit' news.pk %}">{% trans 'EDIT' %}</a>
+<a href="{% url 'news_delete' news.pk %}">{% trans 'DELETE' %}</a>
+<a href="{% url 'subscribe' %}">{% trans 'Subscribe 4 more!' %}</a>
+{% endblock content %}

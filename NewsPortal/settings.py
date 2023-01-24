@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,29 +26,164 @@ SECRET_KEY = 'django-insecure-nh8m^-cv(#7y44#*0g_za%-^b0_8@bv(@i870&0you1-d0rntu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# закомментировала кастомизированное логирование
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'style' : '{',
+#     'formatters': {
+#         'simple': {
+#             'format': '%(asctime)s %(levelname)s %(message)s'
+#         },
+#         'verbose': {
+#             'format': '%(levelname)s %(asctime)s %(pathname)s %(module)s %(process)d %(thread)d %(message)s'
+#         },
+#         'errorformat': {
+#             'format': '%(levelname)s %(asctime)s %(pathname)s %(module)s %(process)d %(thread)d %(message)s %(exc_info)s'
+#         },
+#         'infoformat': {
+#             'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+#         },
+#         'error_file_format': {
+#             'format': '%(levelname)s %(asctime)s %(message)s %(pathname)s %(exc_info)s'
+#         },
+#         'securityformat': {
+#             'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+#         },
+#         'mailformat': {
+#             'format': '%(levelname)s %(asctime)s %(message)s %(pathname)s'
+#         },
+#     },
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse',
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple'
+#         },
+#         'console_warning': {
+#             'level': 'WARNING',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose'
+#         },
+#         'console_error': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose'
+#         },
+#         'file_info': {
+#             'level': 'INFO',
+#             'filters': ['require_debug_false'],
+#             'class': 'logging.FileHandler',
+#             'filename': 'general.log',
+#             'formatter': 'infoformat',
+#         },
+#         'file_error': {
+#             'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': 'error.log',
+#             'formatter': 'error_file_format',
+#         },
+#         'file_security': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'security.log',
+#             'formatter': 'securityformat',
+#         },
+#         'mail_admins': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_false'],
+#             'class': 'django.utils.log.AdminEmailHandler',
+#             'formatter': 'mailformat',
+#         }
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console', 'console_warning', 'console_error', 'file_info'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#         'django.request': {
+#             'handlers': ['mail_admins', 'file_error'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.server': {
+#             'handlers': ['mail_admins', 'file_error'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.template': {
+#             'handlers': ['file_error'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.db_backends': {
+#             'handlers': ['file_error'],
+#             'level': 'ERROR',
+#             'propagate': False,
+#         },
+#         'django.security': {
+#             'handlers': ['file_security'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         }
+#     }
+# }
+
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation', #для перевода на др.языки полей моделей
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'news_app',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'fpages',
+    'news_app.apps.NewsAppConfig',
+    'django_filters',
+    'pers_acc',
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.google',
+    # apscheduler
+    'django_apscheduler',
+    'basic',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
+    'basic.middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPortal.urls'
@@ -55,7 +191,7 @@ ROOT_URLCONF = 'NewsPortal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,8 +239,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Русский')
+]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -114,6 +254,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -124,3 +267,69 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+AUTHENTICATION_BACKENDS = [
+     # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/news/'
+
+LOGOUT_URL = '/accounts/logout/'
+LOGOUT_REDIRECT_URL = '/news/'
+
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #'none'
+ACCOUNT_FORMS = {'signup': 'news_app.forms.BasicSignupForm'}
+# ACCOUNT_SIGNUP_FORM_CLASS = {'signup': 'news_app.forms.LocalSignupForm'}
+
+SITE_ID = 1
+DEFAULT_FROM_EMAIL = 'arahna.aurum@yandex.ru'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'arahna.aurum'
+EMAIL_HOST_PASSWORD = 'ndqbuldrlpkctwej'
+EMAIL_USE_SSL = True
+
+# настройки для apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+# настройки для celery
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+# настройки для кэширования через файловую систему
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+    #https://www.django-rest-framework.org/api-guide/permissions/
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}

@@ -1,0 +1,5 @@
+INFO 2022-02-28 18:11:57,373 autoreload Watching for file changes with StatReloader
+INFO 2022-02-28 18:15:15,734 autoreload C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\NewsPortal\news_app\templatetags\custom_filters.py changed, reloading.
+INFO 2022-02-28 18:15:17,424 autoreload Watching for file changes with StatReloader
+INFO 2022-02-28 18:19:01,465 autoreload C:\Users\Romanova\PycharmProjects\pythonProject2.39\Django_project\NewsPortal\news_app\templatetags\custom_filters.py changed, reloading.
+INFO 2022-02-28 18:19:02,999 autoreload Watching for file changes with StatReloader

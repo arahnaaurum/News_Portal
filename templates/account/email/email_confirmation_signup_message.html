@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greetings</title>
+</head>
+<body>
+    {% load account %} <!-- Загружаем тег который позволит получить нам ссылку на подтверждение -->
+    <h1>Welcome to our community, {{ user.username }}!</h1>
+    <p>Be creative, be happy, be yourself... or else!<p>
+    <img src="https://i.pinimg.com/236x/2e/a2/c0/2ea2c0f9e86939a1e644a73092414bda--creepy-drawings-creepy-art.jpg" alt="greetings">
+    <h3>Please follow <a href="{{ activate_url }}">the link</a> to activate your account</h3>
+     <!-- Вставляем ссылку на активацию -->
+</body>
+</html>

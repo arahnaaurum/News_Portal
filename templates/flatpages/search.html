@@ -1,0 +1,18 @@
+{% extends 'flatpages/default.html' %}
+{% load i18n %}
+{% block title %}
+{% trans 'Search Page' %}
+{% endblock title %}
+
+{% block content %}
+<h1>{% trans 'What are you looking for?' %}</h1>
+<form method="GET">
+    {{ filter.form.as_p }}
+    <input type="submit" value="Найти">
+</form>
+    {%for obj in filter.qs%}
+        <p> {{ obj.title}} </p>
+        <p> {{ obj.time_creation|date:"d M Y" }} </p>
+        <p> {{ obj.text|truncatewords:20}} </p>
+    {%endfor%}
+{% endblock content %}

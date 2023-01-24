@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ instance.title }}</title>
+</head>
+<body>
+    <h1>Dear {{ username }}!</h1>
+    <p>This week brought us something new in the category {{ post_category }}:</p>
+        {% for post in post_list %}
+        <h2>{{ post.title }}</h2>
+        <h3>{{ post.time_creation|date:"d M Y" }}</h3>
+        <p>{{ post.text|truncatewords:20 }}</p>
+        <p> Read the whole story <a href="http://127.0.0.1:8000/news/{{ post.pk }}">here</a>!</p>
+        {% endfor %}
+</body>
+</html>
