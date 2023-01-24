@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-nh8m^-cv(#7y44#*0g_za%-^b0_8@bv(@i870&0you1-d0rntu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# закомментировала кастомизированное логирование
+# настройки кастомизированного логирования
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
@@ -143,7 +143,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -158,8 +157,9 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'fpages',
     'news_app.apps.NewsAppConfig',
-    'django_filters',
     'pers_acc',
+    'index',
+
     # allauth
     'allauth',
     'allauth.account',
@@ -168,8 +168,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     # apscheduler
     'django_apscheduler',
+
     'basic',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -294,15 +296,15 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #'none'
 ACCOUNT_FORMS = {'signup': 'news_app.forms.BasicSignupForm'}
-# ACCOUNT_SIGNUP_FORM_CLASS = {'signup': 'news_app.forms.LocalSignupForm'}
 
+# указать актуальные данные для рассылки писем
 SITE_ID = 1
 DEFAULT_FROM_EMAIL = 'arahna.aurum@yandex.ru'
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'arahna.aurum'
-EMAIL_HOST_PASSWORD = 'ndqbuldrlpkctwej'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_SSL = True
 
 # настройки для apscheduler
@@ -328,7 +330,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
-    #https://www.django-rest-framework.org/api-guide/permissions/
+    'PAGE_SIZE': 10,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ]

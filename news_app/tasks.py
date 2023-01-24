@@ -13,7 +13,7 @@ def send_posts_weekly():
     for subuser in SubUser.objects.all():
         post_list_category = post_list.filter(post_category = subuser.category)
         html_content = render_to_string(
-            'weekly.html',
+            'daily.html',
             {
                 'post_list': post_list_category,
                 'post_category': subuser.category,

@@ -48,7 +48,7 @@ class NewsList(ListView):
     def get_context_data(self, *args, **kwargs):
         return {**super().get_context_data(*args, **kwargs),
                 'filter': self.get_filter(),
-                'current_time': timezone.now(),
+                'current_time': timezone.localtime(timezone.now()),
                 'timezones': pytz.common_timezones
                 }
 
@@ -56,18 +56,13 @@ class NewsList(ListView):
         request.session['django_timezone'] = request.POST['timezone']
         return redirect('/news')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
-    #     return context
-
 
 class NewsDetail(DetailView):
     model = Post
     template_name = 'flatpages/newsdetail.html'
     context_object_name = 'news'
 
-    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта
+    def get_object(self, *args, **kwargs):  # низкоуровневое кэширование
         obj = cache.get(f'post-{self.kwargs["pk"]}',
                         None)
         if not obj:
@@ -81,14 +76,6 @@ class NewsCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'flatpages/news_add.html'
     form_class = PostForm
     permission_required = ('news_app.add_post',)
-
-    # def post(self, request, *args, **kwargs):
-    #     newpost = {'title': request.POST['title'],
-    #                     'text': request.POST['text'],
-    #                     'post_category':request.POST['post_category'],
-    #                     }
-    #     send_new_post(newpost)
-    #     return super().post(request, *args, **kwargs)
 
 
 class NewsUpdateView(PermissionRequiredMixin, UpdateView):
@@ -114,7 +101,7 @@ class SubUserView(View):
         return render(request, 'flatpages/subscribe.html', {})
 
     def post(self, request, *args, **kwargs):
-        category = Category.objects.get(name = request.POST["category_name"])
+        category = Category.objects.get(name=request.POST["category_name"])
         email = ''
         if request.user.email: #если у юзера уже есть почта, будет использована она
            email = request.user.email
@@ -145,7 +132,7 @@ class SubView(CreateView):
     success_url = '/news/'
 
 
-#Это view для отдельной страницы с фильтрами (пока не буду ее удалять, вдруг пригодится)
+# view для отдельной страницы с фильтрами
 def search(request):
     result = SearchFilter(request.GET, queryset = Post.objects.all())
-    return render (request, 'flatpages/search.html', {'filter':result})
+    return render (request, 'flatpages/search.html', {'filter': result})

@@ -26,11 +26,3 @@ class SubscribeForm(ModelForm):
     class Meta:
         model = SubUser
         fields = ['sub_user', 'category', 'user_email']
-
-# присваиваем группу "по умолчанию" при регистрации через сервер - провайдер (зд. - гугл)
-# + в settings надо добавить ACCOUNT_SIGNUP_FORM_CLASS = 'insert_your_app_name.forms.LocalSignupForm'
-# class LocalSignupForm(forms.Form):
-#     def signup(self, request, user):
-#         group = Group.objects.get(name='common')
-#         user.groups.add(group)
-#         user.save()

@@ -4,20 +4,17 @@ register = template.Library()
 
 @register.filter(name="censor")
 def censor(value, arg):
-    result = []
+    # для данного фильтра логично предзадать список значений для разных языков, и обращаться к ним через аргументы
+    swearlist = []
     if arg == "eng":
-        swearlist = ["fuck", "shit"] #для данного фильтра логичнее предзадать список значений для разных языков, и обращаться к ним через аргументы
+        swearlist = []
     elif arg == "rus":
-        swearlist = ["", ""]  # тут можно сделать более обширный список русских слов, который я пока что заполнять не буду)
+        swearlist = []
 
     if isinstance(value, str):
         for i in swearlist:
             if i in value:
-    #             result.append(value[0] + "*" * (len(value) - 2) + value[-1])
-    #         else:
-    #             result.append(value)
-    # return " ".join(result)
-                raise ValueError('Be polite, be-ach!')
+                raise ValueError('Be polite!')
     return value
 
 @register.filter(name='update_page')
